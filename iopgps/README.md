@@ -1,12 +1,15 @@
 # IOPGPS Standalone Testing Module
 
-This module provides standalone scripts for interacting with the IOPGPS Open API via `https://open.iopgps.com`.
+This folder is the standalone sandbox for interacting with IOPGPS (iTrack) without running through Dere backend APIs.
+
+Base URL: `https://open.iopgps.com`  
+Auth endpoint: `POST /api/auth` (`https://open.iopgps.com/api/auth`)
 
 ## 🚀 API Endpoint Reference
 
 | Command / File | Endpoint | Method | Key Headers/Params | Response Highlights |
 | :--- | :--- | :---: | :--- | :--- |
-| **`main.py`** | `/api/auth` | `POST` | `appid`, `signature` | `accessToken`, `expiresIn` |
+| **`main.py`** | `/api/auth` | `POST` | JSON body: `appid`, `time`, `signature` | `accessToken`, `expiresIn` |
 | **`list_devices.py`** | `/api/device` | `GET` | `accessToken`, `pageSize` | `data` (list of devices), `code` |
 | **`get_device_details.py`** | `/api/device/detail` | `GET` | `imei`, `accessToken` | `deviceBrief`, `account`, `vehicleBean` |
 | **`fetch_mileage.py`** | `/api/device/miles` | `GET` | `imei`, `startTime`, `endTime`, `accessToken` | `miles`, `runTime` |
@@ -18,7 +21,7 @@ This module provides standalone scripts for interacting with the IOPGPS Open API
 ## 📂 File Explanations
 
 ### **Core Logic**
-- **`main.py`**: The authentication entry point. It handles the `md5(md5(secret) + time)` signature generation and retrieves the `accessToken` used by all other scripts.
+- **`main.py`**: Auth entry point. It calculates `md5(md5(secret)+time)` and calls `POST /api/auth`.
 - **`device_commands.py`**: A library containing the low-level functions for checking status and sending relay commands. It maps raw IOPGPS codes (like `parameter: 2` for immobilization) into readable results.
 
 ### **Discovery & Data**
@@ -32,6 +35,13 @@ This module provides standalone scripts for interacting with the IOPGPS Open API
 - **`example_usage.py`**: A sample implementation showing how to chain the mileage scripts together to generate a `json` report.
 
 ---
+
+## Required Environment Variables
+
+Set these in `.env` (repo root) or your shell:
+
+- `IOPGPS_APPID`
+- `IOPGPS_PASSWORD`
 
 ## 🛠 Usage Example
 
