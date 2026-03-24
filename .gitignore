@@ -1,0 +1,21 @@
+# Ignored environment configurations
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+venv/
+env/
+ENV/
+*.venv
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Output data
+*.json
+*.csv
+*.log
