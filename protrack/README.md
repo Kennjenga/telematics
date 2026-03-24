@@ -29,7 +29,7 @@ This module provides standalone scripts for interacting with the Protrack API vi
 ### **Active Testing**
 - **`check_and_immobilize_device.py`**: Verifies that a device is currently online and responding before dispatching a relay command.
 - **`analyze_immobilization_status.py`**: Checks if a device supports immobilization and reports its current ignition/cutoff state without modifying them.
-- **`example_usage.py`**: Demonstrates the full integration flow for developers looking to import these scripts into the Dere backend.
+- **`example_usage.py`**: Demonstrates the full integration flow for developers looking to import these scripts into the backend.
 
 ---
 

@@ -1,6 +1,6 @@
-# Dere Telematics Integrations
+# Telematics Integrations
 
-This repository contains standalone, backend-agnostic testing and exploration scripts for the telematics providers integrated into the Dere backend. 
+This repository contains standalone, backend-agnostic testing and exploration scripts for the telematics providers integrated into the backend. 
 
 Currently supported providers:
 1. **Protrack** (`protrack/`)
@@ -14,7 +14,7 @@ Instead of managing multiple virtual environments, this repository uses **one un
 
 ```bash
 # 1. Navigate to the telematics root
-cd /home/trino/dere/telematics
+cd telematics
 
 # 2. Create the master virtual environment
 python3 -m venv venv
@@ -49,7 +49,7 @@ The `protrack` folder comes with several utilities interacting with `api.protrac
 The `iopgps` folder contains fully abstract tools communicating with `https://open.iopgps.com`. To keep maintenance extremely simple, these files identically mirror the structure found in the `protrack/` folder.
 
 - **`main.py`**: Handles API authentication and signature generation using `appid` and `time` via `POST /api/auth`, keeping tokens local.
-- **`analyze_immobilization_status.py`**: Queries device info mapping to Dere's `TelematicsProviderClient` specs by using `GET /api/device/status`.
+- **`analyze_immobilization_status.py`**: Queries device info mapping to the platform `TelematicsProviderClient` specs by using `GET /api/device/status`.
 - **`device_commands.py`**: Exposes the low-level `get_device_status` and triggers the `POST /api/instruction/relay` immobilize sequence mapping to parameter `"2"` for cutoff or `"1"` for restore.
 - **`check_and_immobilize_device.py`**: End-to-end active test hitting the API directly to evaluate security cutoffs.
 - **`example_usage.py`** & **`fetch_mileage.py`**: Batch requests leveraging the specific `GET /api/device/miles` endpoint for fetching cumulative km based on date limits.

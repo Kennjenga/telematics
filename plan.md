@@ -1,7 +1,7 @@
 # Unified Telematics CLI Testing Plan
 
 ## Objective
-Combine the standalone scripts from `protrack/` and `iopgps/` into a single, cohesive CLI tool located at the root of the `telematics/` directory. This acts as a "one-stop" interface to test any telematics provider integrated into Dere without needing to navigate into separate projects or deal with multiple `main.py` files.
+Combine the standalone scripts from `protrack/` and `iopgps/` into a single, cohesive CLI tool located at the root of the `telematics/` directory. This acts as a "one-stop" interface to test any telematics provider integrated into the backend without needing to navigate into separate projects or deal with multiple `main.py` files.
 
 ## Proposed User Experience
 Developers should activate a single virtual environment and use an intuitive terminal command to test interactions:
@@ -20,7 +20,7 @@ python cli.py --provider iopgps --action info --device <IMEI>
 ## Implementation Steps
 
 1. **Centralize the Virtual Environment (Completed)**
-   - Maintain only one `venv` at `/home/trino/dere/telematics/venv`.
+   - Maintain only one `venv` at `telematics/venv`.
    - Maintain a single `/telematics/.env` file containing all provider credentials.
    - Maintain a unified `/telematics/requirements.txt` (`requests`, `python-dotenv`, `argparse`).
 
@@ -42,4 +42,4 @@ python cli.py --provider iopgps --action info --device <IMEI>
    - `--action set-restore`: Restores the relay mapping exactly to how the Django backend invokes it.
 
 5. **Future Proofing**
-   - As new telematics providers (like Wanway or Ruptela) are added to Dere, developers simply create a new folder `telematics/new-provider`, expose the standard functions, and add a single `--provider new-provider` mapping variable in `cli.py`.
+   - As new telematics providers (like Wanway or Ruptela) are added to the platform, developers simply create a new folder `telematics/new-provider`, expose the standard functions, and add a single `--provider new-provider` mapping variable in `cli.py`.

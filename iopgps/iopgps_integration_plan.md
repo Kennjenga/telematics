@@ -1,16 +1,16 @@
-IOPGPS Integration Plan for Dere Telematics
+IOPGPS Integration Plan for Telematics
 Summary
-Integrate IOPGPS as a first-class provider by mirroring the Protrack pattern: implement a new provider client, register it, seed provider schema, and add provider-focused tests. Keep all existing telematics APIs/services unchanged by returning Dere’s normalized telemetry shape and standard exceptions.
+Integrate IOPGPS as a first-class provider by mirroring the Protrack pattern: implement a new provider client, register it, seed provider schema, and add provider-focused tests. Keep all existing telematics APIs/services unchanged by returning the normalized telemetry shape and standard exceptions.
 
 Implementation Plan
-Create IOPGPSClient in /home/trino/dere/DereBackEnd/akuko_api/telematics/providers/iopgps.py.
+Create IOPGPSClient in telematics/providers/iopgps.py.
 Implement auth flow against https://api.itrack.top/api/authorization with signature md5(md5(password)+time), token cache in-instance only, and token refresh/retry on 10010/10011/10012.
-Implement ABC methods from /home/trino/dere/DereBackEnd/akuko_api/telematics/providers/base.py using existing Dere exception types.
+Implement ABC methods from telematics/providers/base.py using existing exception types.
 Implement get_device_list() even though it is not in the ABC, because views/serializers call it.
-Register provider mapping "IOPGPS": IOPGPSClient in /home/trino/dere/DereBackEnd/akuko_api/telematics/providers/registry.py.
-Export IOPGPSClient in /home/trino/dere/DereBackEnd/akuko_api/telematics/providers/__init__.py.
-Add seed entry in /home/trino/dere/DereBackEnd/akuko_api/management/commands/seed_telematics_providers.py with name="IOPGPS" and password.sensitive=True.
-Add tests in /home/trino/dere/DereBackEnd/akuko_api/telematics/tests/test_telematics_providers.py covering auth, retries, normalization, playback mileage, pagination, device-not-found, registry resolution, and unsupported immobilize/restore behavior.
+Register provider mapping "IOPGPS": IOPGPSClient in telematics/providers/registry.py.
+Export IOPGPSClient in telematics/providers/__init__.py.
+Add seed entry in management/commands/seed_telematics_providers.py with name="IOPGPS" and password.sensitive=True.
+Add tests in telematics/tests/test_telematics_providers.py covering auth, retries, normalization, playback mileage, pagination, device-not-found, registry resolution, and unsupported immobilize/restore behavior.
 Provider Behavior Spec (Decision-Complete)
 __init__(account):
 Read decrypted account_fields via base class.
@@ -77,7 +77,7 @@ get_device_list() capability behavior is explicit and deterministic.
 immobilize/restore raise unsupported error with clear message.
 Mileage report pagination combines 1000+N playback records correctly.
 Assumptions and Defaults
-We will follow Dere’s existing ABC signatures from base.py even where your draft snippet differs.
+We will follow the existing ABC signatures from base.py even where your draft snippet differs.
 Unsupported immobilize/restore is safer than geofence side-effects; default is explicit 501 error.
 When IOPGPS does not expose true odometer, mileage is set to 0.0 and today_mileage is computed from playback.
 No extra Vehicle linkage checks will be added in provider methods; callers already enforce provider_account + device_id.
