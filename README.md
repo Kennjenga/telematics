@@ -37,12 +37,22 @@ cp .env.example .env
 
 Fill in the appropriate credentials inside `.env` depending on the provider you are testing. Both `protrack/` and `iopgps/` scripts will automatically detect and pull from this root `.env` file.
 
+## Authentication & Timestamp Testing
+If you ever need to manually test endpoints in Postman, you can instantly generate a ready-to-use JSON login payload, complete with valid UNIX timestamps for both Protrack and IOPGPS:
+```bash
+python get_auth_params.py --provider iopgps
+# OR
+python get_auth_params.py --provider protrack
+```
+*This also outputs a perfect `startTime` (24 hours ago) and `endTime` (now) UNIX timestamp block for mileage queries.*
+
 ## Protrack Scripts (`protrack/`)
 The `protrack` folder comes with several utilities interacting with `api.protrack365.com`:
 
 - **`main.py`**: Handles API authentication, signature generation (`md5(md5(password)+time)`), and extracts JWT/Access Tokens.
 - **`analyze_immobilization_status.py`**: Queries device info (ignition, status, last sync, immobilize flag) and maps Protrack's raw values strings to readable formats.
-- **`check_and_immobilize_device.py`**: An active test that checks the state and then dispatches the `Relay,1#` command to immobilize.
+- **`check_and_immobilize_device.py`**: An active test that checks the state and then dispatches the `Relay,1` command to immobilize.
+- **`list_devices.py`**: Uses the explicit `/api/device/list` endpoint to list all devices registered under the account.
 - **`example_usage.py`** & **`fetch_mileage.py`**: Batch requests and parses the total mileage by date window to a local JSON file. 
 
 ## IOPGPS Scripts (`iopgps/`)

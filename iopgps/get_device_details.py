@@ -8,14 +8,14 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 def get_device_details(imei: str):
-    appid = os.getenv("IOPGPS_APPID")
-    password = os.getenv("IOPGPS_PASSWORD")
+    app_id = os.getenv("IOPGPS_APPID")
+    app_key = os.getenv("IOPGPS_APPKEY")
     
     print("=" * 70)
     print(f"IOPGPS Device Details for IMEI: {imei}")
     print("=" * 70)
     
-    token = get_access_token(appid, password)
+    token = get_access_token(app_id, app_key)
     if not token:
         return
 

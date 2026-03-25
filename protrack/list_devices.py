@@ -20,9 +20,8 @@ def list_protrack_devices():
     if not token:
         return
 
-    # Protrack usually lists all devices via /api/track without specific IMEIs
-    # or via a specific device list endpoint like /api/device/list
-    url = f"https://api.protrack365.com/api/track?access_token={token}"
+    # Protrack provides an endpoint to list all devices: /api/device/list
+    url = f"https://api.protrack365.com/api/device/list?access_token={token}"
     
     try:
         response = requests.get(url)
@@ -31,7 +30,7 @@ def list_protrack_devices():
         
         if data.get("code") == 0:
             devices = data.get("record", [])
-            print(f"Total Device Count: {len(devices)}")
+            print(f"Total Device Count Fetched: {len(devices)}")
             print("-" * 70)
             for dev in devices:
                 imei = dev.get("imei")

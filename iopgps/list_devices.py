@@ -7,14 +7,14 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 def list_account_devices():
-    appid = os.getenv("IOPGPS_APPID")
-    password = os.getenv("IOPGPS_PASSWORD")
+    app_id = os.getenv("IOPGPS_APPID")
+    app_key = os.getenv("IOPGPS_APPKEY")
     
     print("=" * 70)
-    print(f"Listing Devices for Account: {appid}")
+    print(f"Listing Devices for Account: {app_id}")
     print("=" * 70)
     
-    token = get_access_token(appid, password)
+    token = get_access_token(app_id, app_key)
     if not token:
         return
 

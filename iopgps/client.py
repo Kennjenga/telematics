@@ -14,16 +14,16 @@ BASE_URL = "https://open.iopgps.com"
 
 
 class IOPGPSStandaloneClient:
-    def __init__(self, appid: str, password: str, base_url: str = BASE_URL):
+    def __init__(self, appid: str, app_key: str, base_url: str = BASE_URL):
         self.appid = appid
-        self.password = password
+        self.app_key = app_key
         self.base_url = base_url.rstrip("/")
         self._token: Optional[str] = None
 
     def token(self, refresh: bool = False) -> str:
         if self._token and not refresh:
             return self._token
-        token = get_access_token(self.appid, self.password)
+        token = get_access_token(self.appid, self.app_key)
         if not token:
             raise RuntimeError("Failed to get IOPGPS access token.")
         self._token = token

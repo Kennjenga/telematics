@@ -8,23 +8,23 @@ from device_commands import get_device_status, send_immobilization_command
 
 load_dotenv(find_dotenv())
 
-def check_and_immobilize_device(device_id: str, appid: str = None, password: str = None):
-    appid = appid or os.getenv("IOPGPS_APPID")
-    password = password or os.getenv("IOPGPS_PASSWORD")
+def check_and_immobilize_device(device_id: str, app_id: str = None, app_key: str = None):
+    app_id = app_id or os.getenv("IOPGPS_APPID")
+    app_key = app_key or os.getenv("IOPGPS_APPKEY")
     
-    if not appid or not password:
-        print("Please provide appid and password or set IOPGPS_APPID/IOPGPS_PASSWORD in .env")
+    if not app_id or not app_key:
+        print("Please provide app_id and app_key or set IOPGPS_APPID/IOPGPS_APPKEY in .env")
         return
 
     print("=" * 70)
     print("Device Status Check and Immobilization (IOPGPS)")
     print("=" * 70)
     print(f"Device ID: {device_id}")
-    print(f"AppID: {appid}")
+    print(f"AppID: {app_id}")
     print("-" * 70)
     
     print("\n[Step 1] Getting access token...")
-    access_token = get_access_token(appid, password)
+    access_token = get_access_token(app_id, app_key)
     if not access_token:
         print("❌ Failed to get access token. Exiting.")
         return
