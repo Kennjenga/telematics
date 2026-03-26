@@ -8,13 +8,13 @@ load_dotenv(find_dotenv())
 
 def run_example():
     appid = os.getenv("IOPGPS_APPID")
-    password = os.getenv("IOPGPS_PASSWORD")
+    app_key = os.getenv("IOPGPS_APPKEY")
     
-    if not appid or not password:
+    if not appid or not app_key:
         print("Environment variables missing!")
         return
         
-    token = get_access_token(appid, password)
+    token = get_access_token(appid, app_key)
     if not token:
         return
         
